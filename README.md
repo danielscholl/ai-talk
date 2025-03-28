@@ -1,7 +1,5 @@
 # Model, Context, Prompt - _1 Hour Exploratory_
 
-## 👋 Introduction
-
 ## 🤖 [Understanding AI Models](models.md)
 
 #### Definition & Core Components
@@ -70,5 +68,4 @@
 - Basic Agent
 - Multi Agent
 
-## 💡 Questions & Answers 
-
+---
