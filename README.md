@@ -19,6 +19,8 @@
 - Real-world examples and applications
 - How AI models all reply differently
 
+---
+
 ## 💭 [Mastering the Art of Prompting](prompt.md)
 
 #### Definition & Basics
@@ -36,6 +38,8 @@
 
 - Prompt Chaining
 - Real world meta prompting
+
+---
 
 ## 🔍 [The Power of Context](context.md)
 
@@ -56,6 +60,8 @@
 #### AI in Everyday
 
 - Github Copilot and MCP
+
+---
 
 ## ⚡ [Synergy Putting it together](agents/README.md)
 
