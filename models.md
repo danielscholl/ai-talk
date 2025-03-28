@@ -26,33 +26,26 @@ AI models are computer systems that learn from examples to solve problems — ki
 
 **Examples of Learning from Data:**
 
-1. Recognizing Emotions in Text
+1. Recognizing Emotions in Text - Sentiment Analysis
 
 - Input: "This product is amazing!"
 - Output: Positive feeling
 
 _(Like learning to understand tone of voice in conversations)_
 
-2. Identifying Objects in Photos
+2. Identifying Objects in Photos - Image Recognition
 
 - Input: Photo of a cat
 - Ouptut: "there's a cat in the middle"
 
 _(Just like teaching a child to name animals in a picture book)_
 
-3. Translating Languages
+3. Translating Languages - Language Translation
 
 - Input: "Hello, how are you?"
 - Outpu: "Hola, ¿cómo estás?"
 
 _(Like learning vocabulary with flashcards)_
-
-4. Estimating House Prices
-
-- Input: 3-bedroom house in the city, 1500sqft
-- Output: Around $350,000
-
-_(Like how real estate agents get better at pricing homes over time)_
 
 
 ### 🧠 Neural Networks 
