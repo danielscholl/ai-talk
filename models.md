@@ -146,7 +146,9 @@ There are hundreds of AI models out there now — from open-source tools to prem
 
 # Practical Demonstration
 
-> __🤔 Dig Deeper__ [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+> __🤔 Dig Deeper__
+>     [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+>     [LLM Token Visualizer[(https://bbycroft.net/llm)
 
 - [AI ToolKit](https://learn.microsoft.com/en-us/windows/ai/toolkit/)
 - [Msty](https://msty.app/)
