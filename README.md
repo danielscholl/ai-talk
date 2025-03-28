@@ -1,6 +1,5 @@
 # Model, Context, Prompt - _1 Hour Exploratory_
 
----
 
 ## 🤖 [Understanding AI Models](models.md)
 
@@ -19,7 +18,6 @@
 - Real-world examples and applications
 - How AI models all reply differently
 
----
 
 ## 💭 [Mastering the Art of Prompting](prompt.md)
 
@@ -39,7 +37,6 @@
 - Prompt Chaining
 - Real world meta prompting
 
----
 
 ## 🔍 [The Power of Context](context.md)
 
@@ -61,7 +58,6 @@
 
 - Github Copilot and MCP
 
----
 
 ## ⚡ [Synergy Putting it together](agents/README.md)
 
@@ -69,5 +65,3 @@
 
 - Basic Agent
 - Multi Agent
-
----
