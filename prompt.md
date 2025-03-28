@@ -44,9 +44,9 @@ A prompt is the instruction or question you give to an AI model. Think of it lik
 | DELETE | 🗑️ | Remove resources or configurations | "DELETE all unused storage accounts in the dev subscription" |
 | ANALYZE | 🔍 | Review and provide insights | "ANALYZE the ARM template for security best practices" |
 
-🤔 _General:_ "Write an Azure Bicep template."
+🤔 _General:_ "Create a hello world bash script"
 
-🎯 _Specific:_ "CREATE an Azure Bicep template that provisions an AKS cluster (Standard_D2s_v3 nodes) with a managed identity, Azure Container Registry integration, and Azure Monitor enabled. Include RBAC configuration and network policies. The template should use modules for reusability and include parameter descriptions."
+🎯 _Specific:_ "CREATE a hello world bash script. Bash ONLY. NO Markdown"
 
 More Examples:
 ```text
