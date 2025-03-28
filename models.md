@@ -110,22 +110,21 @@ A model with 7 billion parameters can store far more information than one with 7
 **What They Do**: Process and generate human language
 
 **Popular Models Overview**:
-- **GPT-4 (OpenAI)**: Parameter count: Unofficially speculated numbers exist, but OpenAI has not confirmed an exact figure. Rumored to be highly capable in complex reasoning and creative tasks.
-- **Claude-3 (Anthropic)**: Parameter count: Approximately 1 million parameters is a speculative estimate. Often described as excelling in analysis and factual accuracy.
-- **Llama-2 (Meta)**: Parameter count: The 70B variant is one example from its lineup. A strong open-source model available in multiple sizes (e.g., 7B, 13B, and 70B parameters) for general tasks.
-- **Gemini (Google)**: Parameter count & details: Specific numbers and architectural details are not yet officially confirmed, so most descriptions are speculative at this point. Representing Google's next-generation model family, Gemini is expected to push boundaries in multilingual processing and reasoning.
-- **Phi-2 (Microsoft)**: Parameter count: The figure of 2.7B parameters appears in some discussions; however, Microsoft's exact specifications and naming differ from widely publicized models. Reported as a compact yet powerful option for coding tasks.
 
-*
+| Creator | Model | Parameters | Key Characteristics |
+|---------|-------|------------|-------------------|
+| OpenAI | GPT-4 | Not officially disclosed | Highly capable in complex reasoning and creative tasks |
+| Anthropic | Claude-3 | ~1M (estimated) | Excels in analysis and factual accuracy |
+| Meta | Llama-2 | Multiple variants (7B, 13B, 70B) | Strong open-source model for general tasks |
+| Google | Gemini | Not officially disclosed | Next-gen model focused on multilingual processing and reasoning |
+| Microsoft | Phi-2 | 2.7B | Compact yet powerful, optimized for coding tasks |
 
 **Why They Matter**: These models understand and generate text for everything from writing emails to programming code.
 
----
-
-> __🤔 Go Deeper__ --> [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
-
----
 
 # Practical Demonstration
-- [AI ToolKit](https://learn.microsoft.com/en-us/windows/ai/toolkit/) Demo
+
+> __🤔 Dig Deeper__ [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+
+- [AI ToolKit](https://learn.microsoft.com/en-us/windows/ai/toolkit/)
 - [Msty](https://msty.app/)

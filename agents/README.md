@@ -1,7 +1,6 @@
-# Azure OpenAI SDK Examples
+# Agents Creating Agents
 
-A comprehensive collection of single-file examples showcasing the capabilities of the Azure OpenAI SDK with a focus on Agent patterns.
-
+A comprehensive look at the creation of single-file agents using Azure OpenAI SDK with a focus on Agent patterns. 
 
 ## Overview
 
@@ -18,7 +17,7 @@ This repository contains examples demonstrating various features of the Azure Op
 - Error handling and response formatting with rich
 - Comprehensive tests for validation
 
-## Setup
+## Tutorial
 
 1. Configure Azure OpenAI credentials by either:
 
@@ -39,7 +38,20 @@ This repository contains examples demonstrating various features of the Azure Op
    __Basic Agent__
    ```bash
    uv run python director.py --config specs/director_basic_agent_maker.yaml
+   uv run python director.py --config specs/director_multi_agent_maker.yaml
    
    ```
 
-# Agent Descriptions
+## Using a Pull Request Description Agent
+
+1. Install AIPR
+
+   ```bash
+   pip install pr-generator-agent
+   ```
+
+2. Analyze the Change Set
+
+   ```bash
+   aipr
+   ```

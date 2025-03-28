@@ -145,13 +145,9 @@ spec:
 
 The best part? Firecrawl seamlessly adapts this knowledge to your specific implementation, understanding your AKS cluster version, current configuration files, and project requirements—all without you having to search through multiple documentation sources.
 
----
-
-> __🤔 Go Deeper__ --> [MCP Protocol Documentation](https://www.anthropic.com/research/mcp)
-
----
-
 # Practical Demonstration
+
+> __🤔 Dig Deeper__ [MCP Protocol Documentation](https://www.anthropic.com/research/mcp)
 
 - Hands-on setup of [Github MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/github) for Github Copilot
 

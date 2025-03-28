@@ -96,13 +96,9 @@ spec:
     - "0.0.0.0/0"
 ```
 
----
-
-> __🤔 Go Deeper__ --> [Building Effective AI Agents](https://www.anthropic.com/engineering/building-effective-agents)
-
----
-
 # Practical Demonstration
+
+> __🤔 Dig Deeper__ [Building Effective AI Agents](https://www.anthropic.com/engineering/building-effective-agents)
 
 - [Prompt Chaining](https://github.com/danielscholl/prompt-chains)
 - [POM File Metadata Prompt](https://gist.github.com/danielscholl/6b7579a9d5aab8ea231210c3f8c42cd7)
