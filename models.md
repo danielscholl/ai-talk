@@ -118,7 +118,9 @@ A model with 7 billion parameters can store far more information than one with 7
 
 # Practical Demonstration
 
-> __🤔 Dig Deeper__ [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+> __🤔 Dig Deeper__
+>     [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+>     [LLM Token Visualizer[(https://bbycroft.net/llm)
 
 - [AI ToolKit](https://learn.microsoft.com/en-us/windows/ai/toolkit/)
 - [Msty](https://msty.app/)
