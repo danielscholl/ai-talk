@@ -1,67 +1,62 @@
-# Model, Context, Prompt - _1 Hour Exploratory_
+# Model, Context, Prompt
 
 
 ## 🤖 [Understanding AI Models](models.md)
 
 #### Definition & Core Components
 
-- Simple explanation of AI models and how they work
+- AI models and how they work
 - Training Data, Neural Networks, and Pattern Recognition
 
 #### The Growing AI Ecosystem
   
-- Understanding model parameters and capabilities
-- Different types of models and their uses
+- Model parameters and capabilities
+- Types of models and their uses
 
 #### AI in Everyday
 
-- Real-world examples and applications
-- How AI models all reply differently
+- Real World Applications
 
 
 ## 💭 [Mastering the Art of Prompting](prompt.md)
 
 #### Definition & Basics
 
-- What is a prompt and why it matters
-- Input → Process → Output flow
+- Prompting and why it matters
 
 #### Effective Prompt Fundamentals
 
-- Clarity: Using precise, unambiguous language
-- Specificity: Leveraging action-oriented keywords
-- Context: Providing relevant background
+- Using precise, unambiguous language
+- Leveraging action-oriented keywords
+- Providing relevant background
 
 #### AI in Everyday
 
 - Prompt Chaining
-- Real world meta prompting
+- Real World Metaprompts
 
 
 ## 🔍 [The Power of Context](context.md)
 
 #### Definition & Basics
 
-- Context as background information that frames AI understanding
-- How context enhances AI responses like knowledge helps human conversations
+- Context providing additional information
 
 #### The Context Window
 
-- Understanding token limits and model memory capabilities
-- Comparing different models' context capacities
+- Token limits and model memory capabilities
 
 #### Context is King
 
-- Model Context Protocol (MCP) as a universal connector
+- Model Context Protocol (MCP) a universal connector
 
 #### AI in Everyday
 
-- Github Copilot and MCP
+- Github Copilot MCP
 
 
 ## ⚡ [Synergy Putting it together](agents/README.md)
 
 #### AI in Everyday
 
-- Basic Agent
-- Multi Agent
+- Agents creating Agents
