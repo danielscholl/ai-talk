@@ -57,7 +57,7 @@
 
 - Github Copilot and MCP
 
-## ⚡ Synergy: [Putting it all together](agents/README.md)
+## ⚡ [Synergy Putting it together](agents/README.md)
 
 #### AI in Everyday
 
