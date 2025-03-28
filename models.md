@@ -43,7 +43,7 @@ _(Just like teaching a child to name animals in a picture book)_
 3. Translating Languages - _Language Translation_
 
 - Input: "Hello, how are you?"
-- Outpu: "Hola, ¿cómo estás?"
+- Output: "Hola, ¿cómo estás?"
 
 _(Like learning vocabulary with flashcards)_
 
