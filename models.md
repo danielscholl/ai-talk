@@ -108,10 +108,10 @@ Let’s connect this to how it works in real-world scenarios, using examples tie
     - The model identifies that certain phrases, excessive links, or specific formatting patterns often occur in spam emails.
     - Over time, it refines its parameter settings to become more accurate in spotting these characteristics.
 
-3: __Recommendation Systems:__
+3. __Recommendation Systems:__
 
     - By analyzing user behavior—such as listening habits or purchase history—the AI finds patterns in what users prefer.
-    - It then uses those patterns to suggest similar songs, shows, or products based on prior examples
+    - It then uses those patterns to suggest similar songs, shows, or products based on prior examples.
 
 
 ## Types of Models: The Growing AI Ecosystem
