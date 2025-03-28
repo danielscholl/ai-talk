@@ -1,5 +1,7 @@
 # Model, Context, Prompt - _1 Hour Exploratory_
 
+---
+
 ## 🤖 [Understanding AI Models](models.md)
 
 #### Definition & Core Components
