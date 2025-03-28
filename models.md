@@ -105,12 +105,6 @@ A model with 7 billion parameters can store far more information than one with 7
 
 ### Popular Model Types
 
-#### Large Language Models (LLMs)
-
-**What They Do**: Process and generate human language
-
-**Popular Models Overview**:
-
 | Creator | Model | Parameters | Key Characteristics |
 |---------|-------|------------|-------------------|
 | OpenAI | GPT-4 | Not officially disclosed | Highly capable in complex reasoning and creative tasks |
