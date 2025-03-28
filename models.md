@@ -59,7 +59,7 @@ _(Like how real estate agents get better at pricing homes over time)_
 
 **Definition:** A neural network is like a team of tiny decision-makers (neurons), working together to solve problems — kind of like how your brain works. Each “neuron” looks at part of the problem and passes what it learns to the next layer.
 
-**HHow It Works — Like a Game of Telephone:**
+**How It Works — Like a Game of Telephone:**
 
 - __First Layer:__ Spots basic details
 
