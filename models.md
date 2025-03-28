@@ -129,4 +129,3 @@ A model with 7 billion parameters can store far more information than one with 7
 # Practical Demonstration
 - [AI ToolKit](https://learn.microsoft.com/en-us/windows/ai/toolkit/) Demo
 - [Msty](https://msty.app/)
-- Hands-on interaction with different model responses (`ping`)
