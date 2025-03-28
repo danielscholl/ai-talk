@@ -59,5 +59,10 @@
 
 ## ⚡ Synergy: [Putting it all together with Agents](agents/README.md)
 
+### AI in Everyday
+
+- Basic Agent
+- Multi Agent
+
 ## 💡 Questions & Answers 
 
