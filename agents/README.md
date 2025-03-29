@@ -19,31 +19,23 @@ This repository contains examples demonstrating various features of the Azure Op
 
 ## Tutorial
 
-1. Configure Azure OpenAI credentials by either:
+1. Configure Azure OpenAI credentials by setting environment variables:
 
-   Creating a .env file:
-   ```bash
-   cp .env_sample .env
-   # Edit .env with your values
-   ```
-
-   Or setting environment variables directly:
-
-   For the Evaluator (uses Azure OpenAI SDK directly):
+   The Evaluator (uses Azure OpenAI SDK directly):
    ```bash
    export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com"
    export AZURE_OPENAI_API_KEY="your_api_key"
    export AZURE_OPENAI_VERSION="2024-12-01-preview"
    ```
 
-   For the Coder (uses Aider which expects different variable names):
+   The Coder (uses Aider which expects different variable names):
    ```bash
    export AZURE_API_BASE="https://your-resource.openai.azure.com"  
    export AZURE_API_KEY="your_api_key"
    export AZURE_API_VERSION="2024-12-01-preview"
    ```
 
-    If you plan to use the Director with non Azure OpenAI models then the following environment variables are also required:
+   For other providers, set the following environment variables:
    ```bash
    export OPENAI_API_KEY="your_api_key"
    export ANTHROPIC_API_KEY="your_api_key"
@@ -55,7 +47,6 @@ This repository contains examples demonstrating various features of the Azure Op
    ```bash
    uv run python director.py --config specs/director_basic_agent_maker.yaml
    uv run python director.py --config specs/director_multi_agent_maker.yaml
-   
    ```
 
 ## Using a Pull Request Description Agent
