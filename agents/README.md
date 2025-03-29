@@ -28,13 +28,22 @@ This repository contains examples demonstrating various features of the Azure Op
    ```
 
    Or setting environment variables directly:
+
+   For the Evaluator (uses Azure OpenAI SDK directly):
    ```bash
-   export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
+   export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com"
    export AZURE_OPENAI_API_KEY="your_api_key"
    export AZURE_OPENAI_VERSION="2024-12-01-preview"
    ```
 
-   If you plan to use the Director with non Azure OpenAI models then the following environment variables are also required:
+   For the Coder (uses Aider which expects different variable names):
+   ```bash
+   export AZURE_API_BASE="https://your-resource.openai.azure.com"  
+   export AZURE_API_KEY="your_api_key"
+   export AZURE_API_VERSION="2024-12-01-preview"
+   ```
+
+    If you plan to use the Director with non Azure OpenAI models then the following environment variables are also required:
    ```bash
    export OPENAI_API_KEY="your_api_key"
    export ANTHROPIC_API_KEY="your_api_key"

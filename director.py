@@ -51,17 +51,36 @@ class Director:
         if self.config.evaluator_model.startswith("azure/"):
             # Get deployment name by removing 'azure/' prefix
             deployment = self.get_model_name(self.config.evaluator_model)
+            
+            # Validate deployment name
+            if not deployment or deployment == "":
+                raise ValueError(f"Invalid deployment name extracted from model: {self.config.evaluator_model}")
 
-            # Get the base endpoint without the deployment path
-            base_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-            if not base_endpoint:
-                raise ValueError("AZURE_OPENAI_ENDPOINT environment variable is required for Azure OpenAI")
+            # Get values from AZURE_OPENAI_* environment variables
+            azure_api_key = os.getenv("AZURE_OPENAI_API_KEY")
+            azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+            azure_version = os.getenv("AZURE_OPENAI_VERSION")
 
-            api_version = os.getenv("AZURE_OPENAI_VERSION", "2024-12-01-preview")  # Default if not set
+            # Check if we have the required variables
+            if not azure_api_key:
+                raise ValueError("AZURE_OPENAI_API_KEY environment variable is required for Azure OpenAI evaluator")
+            if not azure_endpoint:
+                raise ValueError("AZURE_OPENAI_ENDPOINT environment variable is required for Azure OpenAI evaluator")
+            if not azure_version:
+                raise ValueError("AZURE_OPENAI_VERSION environment variable is required for Azure OpenAI evaluator")
+
+            # Ensure endpoint has trailing slash
+            if not azure_endpoint.endswith('/'):
+                azure_endpoint = azure_endpoint + '/'
+                os.environ["AZURE_OPENAI_ENDPOINT"] = azure_endpoint  # Update the original variable too
+            
+            self.file_log(f"Using Azure OpenAI with deployment: {deployment}, version: {azure_version}")
+            
             return AzureOpenAI(
-                api_version=api_version,
-                azure_endpoint=base_endpoint,
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+                api_version=azure_version,
+                azure_endpoint=azure_endpoint,
+                api_key=azure_api_key,
+                azure_deployment=deployment,
             )
         else:
             return OpenAI()
@@ -101,6 +120,15 @@ class Director:
                 f"evaluator_model must be one of {allowed_evaluator_models}, "
                 f"got {config.evaluator_model}"
             )
+
+        # Validate coder_model if it's an Azure model
+        if config.coder_model.startswith("azure/"):
+            allowed_azure_coder_models = {"azure/gpt-4o"}
+            if config.coder_model not in allowed_azure_coder_models:
+                raise ValueError(
+                    f"When using Azure, coder_model must be 'azure/gpt-4o', "
+                    f"got {config.coder_model}. Note: The model name must match your Azure deployment name exactly."
+                )
 
         # Validate we have at least 1 editable file
         if not config.context_editable:
@@ -174,17 +202,111 @@ class Director:
 {evaluation.feedback}"""
 
     def ai_code(self, prompt: str):
-        model = Model(self.config.coder_model)
-        coder = Coder.create(
-            main_model=model,
-            io=InputOutput(yes=True),
-            fnames=self.config.context_editable,
-            read_only_fnames=self.config.context_read_only,
-            auto_commits=False,
-            suggest_shell_commands=False,
-            detect_urls=False,
-        )
-        coder.run(prompt)
+        # If using Azure model, set the API version in environment for aider
+        original_vars = {}
+        try:
+            if self.config.coder_model.startswith("azure/"):
+                # Store original environment variables
+                original_vars = {
+                    'azure_api_version': os.getenv("AZURE_API_VERSION"),
+                    'azure_api_key': os.getenv("AZURE_API_KEY"),
+                    'azure_api_base': os.getenv("AZURE_API_BASE"),
+                    'api_type': os.getenv("OPENAI_API_TYPE"),
+                    'api_version': os.getenv("OPENAI_API_VERSION"),
+                    'api_base': os.getenv("OPENAI_API_BASE"),
+                    'api_key': os.getenv("OPENAI_API_KEY"),
+                    'deployment': os.getenv("OPENAI_DEPLOYMENT_NAME"),
+                    'model': os.getenv("OPENAI_MODEL_NAME")
+                }
+
+                # Get deployment name (model name without azure/ prefix)
+                deployment = self.get_model_name(self.config.coder_model)
+
+                # Check for required AZURE_API_* variables (required by Aider)
+                azure_api_key = os.getenv("AZURE_API_KEY")
+                azure_endpoint = os.getenv("AZURE_API_BASE")
+                azure_version = os.getenv("AZURE_API_VERSION")
+
+                # Check if we have the required variables
+                if not azure_api_key:
+                    raise ValueError("AZURE_API_KEY environment variable is required for Azure OpenAI with Aider")
+                if not azure_endpoint:
+                    raise ValueError("AZURE_API_BASE environment variable is required for Azure OpenAI with Aider")
+                if not azure_version:
+                    raise ValueError("AZURE_API_VERSION environment variable is required for Azure OpenAI with Aider")
+
+                # Ensure endpoint has trailing slash
+                if not azure_endpoint.endswith('/'):
+                    azure_endpoint = azure_endpoint + '/'
+
+                self.file_log(f"Using Azure OpenAI with deployment: {deployment}, version: {azure_version}")
+                
+                # Set OpenAI variables as fallback
+                os.environ["OPENAI_API_TYPE"] = "azure"
+                os.environ["OPENAI_API_VERSION"] = azure_version
+                os.environ["OPENAI_API_BASE"] = azure_endpoint
+                os.environ["AZURE_API_BASE"] = azure_endpoint  # Update the original variable too
+                
+                model = Model(self.config.coder_model)
+                coder = Coder.create(
+                    main_model=model,
+                    io=InputOutput(yes=True),
+                    fnames=self.config.context_editable,
+                    read_only_fnames=self.config.context_read_only,
+                    auto_commits=False,
+                    suggest_shell_commands=False,
+                    detect_urls=False,
+                )
+                try:
+                    coder.run(prompt)
+                finally:
+                    # Clean up resources
+                    if hasattr(coder, 'cleanup'):
+                        coder.cleanup()
+                    # Force close any remaining event loops
+                    if hasattr(model, 'close'):
+                        model.close()
+            else:
+                # Non-Azure model
+                self.file_log(f"Using model: {self.config.coder_model}")
+                model = Model(self.config.coder_model)
+                coder = Coder.create(
+                    main_model=model,
+                    io=InputOutput(yes=True),
+                    fnames=self.config.context_editable,
+                    read_only_fnames=self.config.context_read_only,
+                    auto_commits=False,
+                    suggest_shell_commands=False,
+                    detect_urls=False,
+                )
+                try:
+                    coder.run(prompt)
+                finally:
+                    # Clean up resources
+                    if hasattr(coder, 'cleanup'):
+                        coder.cleanup()
+                    # Force close any remaining event loops
+                    if hasattr(model, 'close'):
+                        model.close()
+        finally:
+            # Restore original environment variables
+            if self.config.coder_model.startswith("azure/"):
+                for key, value in original_vars.items():
+                    env_key = {
+                        'azure_api_version': "AZURE_API_VERSION",
+                        'azure_api_key': "AZURE_API_KEY",
+                        'azure_api_base': "AZURE_API_BASE",
+                        'api_type': "OPENAI_API_TYPE",
+                        'api_version': "OPENAI_API_VERSION",
+                        'api_base': "OPENAI_API_BASE",
+                        'api_key': "OPENAI_API_KEY",
+                        'deployment': "OPENAI_DEPLOYMENT_NAME",
+                        'model': "OPENAI_MODEL_NAME"
+                    }[key]
+                    if value is not None:
+                        os.environ[env_key] = value
+                    else:
+                        os.environ.pop(env_key, None)
 
     def execute(self) -> str:
         """Execute the tests and return the output as a string."""
@@ -303,52 +425,57 @@ Return a structured JSON response with the following structure: {{
                 raise ValueError(f"Both primary and fallback evaluation failed. Primary error: {e}, Fallback error: {fallback_error}")
 
     def direct(self):
-        evaluation = EvaluationResult(success=False, feedback=None)
-        execution_output = ""
-        success = False
+        try:
+            evaluation = EvaluationResult(success=False, feedback=None)
+            execution_output = ""
+            success = False
 
-        for i in range(self.config.max_iterations):
-            self.file_log(f"\nIteration {i+1}/{self.config.max_iterations}")
+            for i in range(self.config.max_iterations):
+                self.file_log(f"\nIteration {i+1}/{self.config.max_iterations}")
 
-            self.file_log("🧠 Creating new prompt...")
-            new_prompt = self.create_new_ai_coding_prompt(
-                i, self.config.prompt, execution_output, evaluation
-            )
-
-            self.file_log("🤖 Generating AI code...")
-            self.ai_code(new_prompt)
-
-            self.file_log(f"💻 Executing code... '{self.config.execution_command}'")
-            execution_output = self.execute()
-
-            self.file_log(
-                f"🔍 Evaluating results... '{self.config.evaluator_model}' + '{self.config.evaluator}'"
-            )
-            evaluation = self.evaluate(execution_output)
-
-            self.file_log(
-                f"🔍 Evaluation result: {'✅ Success' if evaluation.success else '❌ Failed'}"
-            )
-            if evaluation.feedback:
-                self.file_log(f"💬 Feedback: \n{evaluation.feedback}")
-
-            if evaluation.success:
-                success = True
-                self.file_log(
-                    f"\n🎉 Success achieved after {i+1} iterations! Breaking out of iteration loop."
-                )
-                break
-            else:
-                self.file_log(
-                    f"\n🔄 Continuing with next iteration... Have {self.config.max_iterations - i - 1} attempts remaining."
+                self.file_log("🧠 Creating new prompt...")
+                new_prompt = self.create_new_ai_coding_prompt(
+                    i, self.config.prompt, execution_output, evaluation
                 )
 
-        if not success:
-            self.file_log(
-                "\n🚫 Failed to achieve success within the maximum number of iterations."
-            )
+                self.file_log("🤖 Generating AI code...")
+                self.ai_code(new_prompt)
 
-        self.file_log("\nDone.")
+                self.file_log(f"💻 Executing code... '{self.config.execution_command}'")
+                execution_output = self.execute()
+
+                self.file_log(
+                    f"🔍 Evaluating results... '{self.config.evaluator_model}' + '{self.config.evaluator}'"
+                )
+                evaluation = self.evaluate(execution_output)
+
+                self.file_log(
+                    f"🔍 Evaluation result: {'✅ Success' if evaluation.success else '❌ Failed'}"
+                )
+                if evaluation.feedback:
+                    self.file_log(f"💬 Feedback: \n{evaluation.feedback}")
+
+                if evaluation.success:
+                    success = True
+                    self.file_log(
+                        f"\n🎉 Success achieved after {i+1} iterations! Breaking out of iteration loop."
+                    )
+                    break
+                else:
+                    self.file_log(
+                        f"\n🔄 Continuing with next iteration... Have {self.config.max_iterations - i - 1} attempts remaining."
+                    )
+
+            if not success:
+                self.file_log(
+                    "\n🚫 Failed to achieve success within the maximum number of iterations."
+                )
+
+            self.file_log("\nDone.")
+        finally:
+            # Clean up any remaining resources
+            if hasattr(self.llm_client, 'close'):
+                self.llm_client.close()
 
 
 if __name__ == "__main__":
