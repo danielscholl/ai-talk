@@ -41,6 +41,12 @@ This repository contains examples demonstrating various features of the Azure Op
    export ANTHROPIC_API_KEY="your_api_key"
    ```
 
+2. Initialize the Project
+
+   ```bash
+   uv sync
+   ```
+
 2. Use the Director to create an agent.
 
    __Basic Agent__

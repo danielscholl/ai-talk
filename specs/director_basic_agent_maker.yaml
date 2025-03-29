@@ -4,8 +4,8 @@ prompt: specs/basic_agent_spec.md
 # The model to use for code generation
 # Supported models: any aider supported model including Azure OpenAI models with azure/ prefix
 # coder_model: claude-3-7-sonnet-latest
-coder_model: claude-3-5-sonnet-latest
-# coder_model: azure/gpt-4o
+# coder_model: claude-3-5-sonnet-latest
+coder_model: azure/gpt-4o
 
 # List of files that can be modified by the AI
 context_editable:
