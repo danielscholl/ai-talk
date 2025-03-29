@@ -34,6 +34,12 @@ This repository contains examples demonstrating various features of the Azure Op
    export AZURE_OPENAI_VERSION="2024-12-01-preview"
    ```
 
+   If you plan to use the Director with non Azure OpenAI models then the following environment variables are also required:
+   ```bash
+   export OPENAI_API_KEY="your_api_key"
+   export ANTHROPIC_API_KEY="your_api_key"
+   ```
+
 2. Use the Director to create an agent.
 
    __Basic Agent__
