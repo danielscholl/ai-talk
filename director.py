@@ -53,15 +53,15 @@ class Director:
             deployment = self.get_model_name(self.config.evaluator_model)
 
             # Get the base endpoint without the deployment path
-            base_endpoint = os.getenv("AZURE_API_BASE")
+            base_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
             if not base_endpoint:
-                raise ValueError("AZURE_API_BASE environment variable is required for Azure OpenAI")
+                raise ValueError("AZURE_OPENAI_ENDPOINT environment variable is required for Azure OpenAI")
 
-            api_version = os.getenv("AZURE_API_VERSION", "2024-02-15-preview")  # Provide a default if needed
+            api_version = os.getenv("AZURE_OPENAI_VERSION", "2024-12-01-preview")  # Default if not set
             return AzureOpenAI(
                 api_version=api_version,
                 azure_endpoint=base_endpoint,
-                api_key=os.getenv("AZURE_API_KEY"),
+                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
             )
         else:
             return OpenAI()

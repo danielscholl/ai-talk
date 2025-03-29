@@ -29,8 +29,9 @@ This repository contains examples demonstrating various features of the Azure Op
 
    Or setting environment variables directly:
    ```bash
-   export AZURE_API_KEY="your_api_key"
-   export AZURE_API_BASE="https://your-resource.openai.azure.com/"
+   export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
+   export AZURE_OPENAI_API_KEY="your_api_key"
+   export AZURE_OPENAI_VERSION="2024-12-01-preview"
    ```
 
 2. Use the Director to create an agent.
@@ -55,3 +56,5 @@ This repository contains examples demonstrating various features of the Azure Op
    ```bash
    aipr
    ```
+
+## Sample Agents

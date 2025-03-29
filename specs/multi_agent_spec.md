@@ -18,7 +18,7 @@
 - Use the exact shebang line: `#!/usr/bin/env -S uv run --script`
 - Include the uv script dependencies block exactly as provided
 - The script should be self-contained in a single file
-- Support environment variables for configuration (AZURE_API_BASE, AZURE_API_KEY, AZURE_API_VERSION)
+- Support environment variables for configuration (AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY, AZURE_OPENAI_VERSION)
 - Include clear, concise docstrings and comments
 - Default to "gpt-4o" model name for all agents
 - Include tests that can be run with pytest
@@ -72,8 +72,8 @@ Test with:
 ```aider
 UPDATE agents/multi_agent.py
     CREATE def get_client() -> AzureOpenAI
-        - Check for required environment variables (AZURE_API_BASE, AZURE_API_KEY)
-        - Use default API version if not specified (2024-02-01)
+        - Check for required environment variables (AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY)
+        - Use default API version if not specified (2024-12-01-preview)
         - Return configured client
 
     CREATE @dataclass Handoff
