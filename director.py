@@ -322,7 +322,6 @@ class Director:
         return result.stdout + result.stderr
 
     def evaluate(self, execution_output: str) -> EvaluationResult:
-
         if self.config.evaluator != "default":
             raise ValueError(
                 f"Custom evaluator {self.config.evaluator} not implemented"
@@ -338,7 +337,16 @@ class Director:
             for fname in self.config.context_read_only
         }
 
-        evaluation_prompt = f"""Evaluate this execution output and determine if it was successful based on the execution command, the user's desired result, the editable files, checklist, and the read-only files.
+        # Add JSON instruction at the start of the prompt for all models
+        json_instruction = """You must respond with valid JSON only. No other text.
+The JSON must match this structure exactly:
+{
+    "success": boolean,
+    "feedback": string or null
+}
+"""
+
+        evaluation_prompt = f"""{json_instruction}Evaluate this execution output and determine if it was successful based on the execution command, the user's desired result, the editable files, checklist, and the read-only files.
 
 ## Checklist:
 - Is the execution output reporting success or failure?
@@ -377,14 +385,12 @@ Return a structured JSON response with the following structure: {{
 
         try:
             model_name = self.get_model_name(self.config.evaluator_model)
+            
+            # Create the completion - response_format is only supported by certain models
+            # For now, we'll use it only in the fallback case with gpt-4o
             completion = self.llm_client.chat.completions.create(
                 model=model_name,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": evaluation_prompt,
-                    },
-                ],
+                messages=[{"role": "user", "content": evaluation_prompt}]
             )
 
             self.file_log(
@@ -402,7 +408,7 @@ Return a structured JSON response with the following structure: {{
                 f"Error evaluating execution output for '{self.config.evaluator_model}'. Error: {e}. Falling back to gpt-4o & structured output."
             )
 
-            ## Fallback using standard OpenAI client
+            ## Fallback using standard OpenAI client with gpt-4o which supports response_format
             fallback_client = OpenAI()  # Create new standard OpenAI client for fallback
             try:
                 completion = fallback_client.beta.chat.completions.parse(
