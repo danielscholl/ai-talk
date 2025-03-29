@@ -57,8 +57,9 @@ class Director:
             if not base_endpoint:
                 raise ValueError("AZURE_API_BASE environment variable is required for Azure OpenAI")
 
+            api_version = os.getenv("AZURE_API_VERSION", "2024-02-15-preview")  # Provide a default if needed
             return AzureOpenAI(
-                api_version="2024-12-01-preview",
+                api_version=api_version,
                 azure_endpoint=base_endpoint,
                 api_key=os.getenv("AZURE_API_KEY"),
             )
