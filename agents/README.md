@@ -34,19 +34,19 @@ flowchart TD
 
 ## Single-File Agents
 
-This folder demonstrates two types of single-file agents created using the Director pattern:
+This folder demonstrates two types of single-file agents created using the [director](../director.py) pattern:
 
 ### Basic Agent
 A simple, self-contained agent that performs a single task. This agent demonstrates the fundamental principles of the Director pattern in its most basic form.
 
-- [Director Configuration](specs/director_basic_agent_maker.yaml)
-- [Agent Specification](specs/basic_agent_spec.md)
+- [Director Configuration](../specs/director_basic_agent_maker.yaml)
+- [Agent Specification](../specs/basic_agent_spec.md)
 
 ### Multi-Agent
 A more complex agent that demonstrates coordination between multiple specialized agents, each handling different aspects of a task while working together.
 
-- [Director Configuration](specs/director_multi_agent_maker.yaml)
-- [Agent Specification](specs/multi_agent_spec.md)
+- [Director Configuration](../specs/director_multi_agent_maker.yaml)
+- [Agent Specification](../specs/multi_agent_spec.md)
 
 ## Demonstration
 
