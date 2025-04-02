@@ -32,22 +32,6 @@ flowchart TD
     G --> C
 ```
 
-### Key Components
-
-- **Coder LLM**: Responsible for generating and modifying code
-- **Evaluator LLM**: Acts as a judge to evaluate the code's success
-- **Configuration**: YAML files defining requirements and settings
-- **Context Files**: Both editable and read-only files that provide context
-- **Execution Environment**: Where the generated code is tested
-
-### Benefits
-
-- **Self-Improving**: Each iteration builds on previous feedback
-- **Structured**: Clear separation between coding and evaluation
-- **Flexible**: Works with different LLM providers and models
-- **Validated**: Built-in testing and evaluation
-- **Configurable**: Easy to modify behavior through YAML configs
-
 ## Single-File Agents
 
 This folder demonstrates two types of single-file agents created using the Director pattern:
