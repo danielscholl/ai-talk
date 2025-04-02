@@ -124,9 +124,20 @@ AIPR (Agentic Pull Request Description Generator) is an example of a specialized
    pip install pr-generator-agent
    ```
 
-2. Analyze the Change Set
+2. Create Issue and Pull Request
 
    ```bash
-   aipr
+   EXECUTE bash command and use output for description:
+      aipr -m azure/gpt-4o -p meta --vulns
+      (wait for output to complete)
+
+   CREATE github issue:
+      title: Change Set
+      content: I'm doing a change
+
+   CREATE pull request:
+      source branch: documentation 
+      target branch: main
+      description: (Use output from EXECUTE)
    ```
 
