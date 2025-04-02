@@ -1,0 +1,36 @@
+# The prompt that describes what changes need to be made to the codebase
+prompt: specs/basic_agent_spec.md
+
+# The model to use for code generation
+# Supported models: any aider supported model including Azure OpenAI models with azure/ prefix
+# coder_model: claude-3-7-sonnet-latest
+coder_model: claude-3-5-sonnet-latest
+# coder_model: azure/gpt-4o
+
+# List of files that can be modified by the AI
+context_editable:
+  - agents/basic_agent.py
+  - agents/AGENTS.md
+
+# List of files that provide context but cannot be modified
+context_read_only:
+  - ai_docs/azure_openai_python.md
+  - pytest.ini
+  - pyproject.toml
+
+# Command to run tests/validation
+# Example: "pytest tests/" or "python -m unittest"
+execution_command: uv run pytest agents/basic_agent.py
+
+# Maximum number of attempts to generate correct code
+# Recommended range: 3-10
+max_iterations: 5
+
+# The model to use for code evaluation
+# Reasoning models are recommended
+evaluator_model: o1-mini
+# evaluator_model: azure/o1-mini
+
+# Evaluator type to use
+# Currently only supports: "default"
+evaluator: default

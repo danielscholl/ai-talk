@@ -1,0 +1,17 @@
+[project]
+name = "director"
+version = "0.1.0"
+description = "Self Directed AI Coding Assistant"
+requires-python = ">=3.11,<3.13"
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "openai>=1.65.0,<1.66.0",
+    "PyYAML>=6.0.1",
+    "aider-chat>=0.75.0,<0.76.0",
+    "pytest>=8.3.5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

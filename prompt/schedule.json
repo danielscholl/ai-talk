@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "Monday": ["Carlos", "Diana"],
+    "Tuesday": ["Alice", "Carlos"],
+    "Wednesday": ["Bob", "Diana"],
+    "Thursday": ["Alice", "Diana"],
+    "Friday": ["Alice", "Bob"]
+  }
+}

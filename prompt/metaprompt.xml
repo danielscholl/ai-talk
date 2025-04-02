@@ -1,0 +1,419 @@
+<purpose>
+    You are an expert in analyzing and refactoring Maven POM files.
+    Your task is to analyze the POM file provided in the <project> section at the end of this file,
+    and provide both a standardized POM file and clear documentation for changes.
+
+    Follow the pattern section exactly to generate a properly structured POM file.
+</purpose>
+
+<instructions>
+    <instruction>Read and analyze the POM file content provided in the <project> section at the end of this file.</instruction>
+    <instruction>Ensure a copyright notice from the copyright section as an XML comment block at the top of each generated POM file, before the project element.</instruction>
+    <instruction>Analyze the input POM file and create a list of issues found, ordered by severity (5-1).</instruction>
+    <instruction>Format each issue exactly as shown in the examples section: severity, file location, line numbers, description, and fix.</instruction>
+    <instruction>Generate a complete, valid POM file that precisely matches the structure and formatting in the pattern section.</instruction>
+    <instruction>Follow the pattern section's organization for properties, dependencies, and build configuration.</instruction>
+    <instruction>Group dependencies into sections (OSDU, Spring, Azure, Test) with comments as demonstrated in the pattern.</instruction>
+    <instruction>Create a pull request description using the exact format specified in the pull_request section.</instruction>
+    <instruction>List changes in the pull request following the severity format shown in the examples section.</instruction>
+    <instruction>Only suggest changes when completely confident in their correctness and necessity - if unsure about a change, exclude it.</instruction>
+    <instruction>Remove java.version, maven.compiler.source, and maven.compiler.target properties as these are inherited from parent.</instruction>
+    <instruction>Use ${project.version} for dependencies that share the same version as the project instead of defining separate properties.</instruction>
+    <instruction>Replace multiple JUnit-related test dependencies (junit, junit-jupiter, mockito-junit-jupiter) with the single junit-vintage-engine dependency, which provides compatibility for both JUnit 4 and 5.</instruction>
+    <instruction>Include springdoc-openapi-starter-webmvc-ui dependency for Swagger documentation support.</instruction>
+    <instruction>Format your complete response in three distinct sections with proper markdown and xml formatting:
+        1. Issues List (markdown)
+        2. Updated POM (xml)
+        3. Pull Request (markdown following template)</instruction>
+</instructions>
+
+<copyright>
+  Copyright © Microsoft Corporation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+</copyright>
+
+<pattern>
+
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+        <modelVersion>4.0.0</modelVersion>
+        <artifactId>os-schema-azure</artifactId>
+        <description>Schema Service on Azure</description>
+        <packaging>jar</packaging>
+
+        <parent>
+            <artifactId>os-schema</artifactId>
+            <groupId>org.opengroup.osdu</groupId>
+            <version>0.28.0-SNAPSHOT</version>
+            <relativePath>../../pom.xml</relativePath>
+        </parent>
+
+        <properties>
+            <core-lib-azure.version>2.0.2</core-lib-azure.version>
+            <!-- Test Dependencies -->
+            <cucumber.version>7.20.1</cucumber.version>
+        <!-- Plugin Versions -->
+        <surefire-plugin.version>3.2.2</surefire-plugin.version>
+        <jacoco-plugin.version>0.8.12</jacoco-plugin.version>
+        </properties>
+
+        <dependencyManagement>
+            <dependencies>
+        <!-- Core Azure Library -->
+        <dependency>
+            <groupId>org.opengroup.osdu</groupId>
+            <artifactId>core-lib-azure</artifactId>
+            <version>${core-lib-azure.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+            </dependencies>
+        </dependencyManagement>
+
+        <dependencies>
+            <!-- OSDU Dependencies -->
+            <dependency>
+                <groupId>org.opengroup.osdu</groupId>
+                <artifactId>os-schema-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.opengroup.osdu</groupId>
+                <artifactId>core-lib-azure</artifactId>
+                <version>${core-lib-azure.version}</version>
+            </dependency>
+
+        <!-- Spring Dependencies -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+        <version>${spring-boot.version}</version>
+        <exclusions>
+            <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            </exclusion>
+            <exclusion>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            </exclusion>
+        </exclusions>
+        </dependency>
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-log4j2</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+            </exclusion>
+        </exclusions>
+        </dependency>
+
+        <!-- Azure Dependencies -->
+        <!-- Versions managed by azure core library -->
+        <dependency>
+        <groupId>com.azure</groupId>
+        <artifactId>azure-spring-data-cosmos</artifactId>
+        </dependency>
+        <dependency>
+        <groupId>com.azure.spring</groupId>
+        <artifactId>spring-cloud-azure-starter-active-directory</artifactId>
+        </dependency>
+
+            <!-- Test Dependencies -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <scope>test</scope>
+        <version>${cucumber.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <scope>test</scope>
+        <version>${cucumber.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+
+        <!-- Build Configuration -->
+        <build>
+            <plugins>
+                <!-- Spring Boot Maven Plugin -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${surefire-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <configuration>
+                                <classifier>spring-boot</classifier>
+                                <mainClass>org.opengroup.osdu.schema.azure.SchemaAzureApplication</mainClass>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- JaCoCo Plugin -->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-plugin.version}</version>
+                    <configuration>
+                        <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                        <excludes>
+                            <exclude>**/*org/opengroup/osdu/schema/azure/definitions/**</exclude>
+                            <exclude>**/*org/opengroup/osdu/schema/azure/di/**Config.class</exclude>
+                            <exclude>**/*org/opengroup/osdu/schema/azure/impl/messagebus/model/**</exclude>
+                            <exclude>**/*org/opengroup/osdu/schema/azure/SchemaApplication.class</exclude>
+                            <exclude>**/*org/opengroup/osdu/schema/security/**</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>legal-azure</artifactId>
+    <description>Legal service on Azure</description>
+    <packaging>jar</packaging>
+
+    <parent>
+        <artifactId>legal-service</artifactId>
+        <groupId>org.opengroup.osdu.legal</groupId>
+        <version>0.28.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <core-lib-azure.version>2.0.2</core-lib-azure.version>
+        <gson.version>2.11.0</gson.version>
+        <!-- Plugin Versions -->
+        <surefire-plugin.version>3.0.0</surefire-plugin.version>
+        <jacoco-plugin.version>0.8.12</jacoco-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+        <!-- Core Azure Library -->
+        <dependency>
+            <groupId>org.opengroup.osdu</groupId>
+            <artifactId>core-lib-azure</artifactId>
+            <version>${core-lib-azure.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- OSDU Dependencies -->
+        <dependency>
+        <groupId>org.opengroup.osdu.legal</groupId>
+        <artifactId>legal-core</artifactId>
+        <version>${project.version}</version>
+        </dependency>
+        <dependency>
+        <groupId>org.opengroup.osdu</groupId>
+        <artifactId>core-lib-azure</artifactId>
+        <version>${core-lib-azure.version}</version>
+        </dependency>
+
+        <!-- Spring Dependencies -->
+        <!-- Versions managed by parent pom -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <exclusions>
+            <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            </exclusion>
+            <exclusion>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            </exclusion>
+        </exclusions>
+        </dependency>
+        <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+
+        <!-- Project Dependencies -->
+        <dependency>
+        <groupId>com.azure.spring</groupId>
+        <artifactId>spring-cloud-azure-starter-active-directory</artifactId>
+        <!-- Version managed by azure core library -->
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+
+        <!-- Test Scoped Dependencies -->
+        <!-- Versions managed by parent pom unless otherwise specified -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+        </dependency>
+        <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Build Configuration -->
+    <build>
+        <plugins>
+        <!-- Spring Boot Maven Plugin -->
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+            <execution>
+                <goals>
+                <goal>repackage</goal>
+                </goals>
+                <configuration>
+                <classifier>spring-boot</classifier>
+                <mainClass>org.opengroup.osdu.legal.azure.LegalApplication</mainClass>
+                </configuration>
+            </execution>
+            </executions>
+        </plugin>
+
+        <!-- Surefire Plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${surefire-plugin.version}</version>
+            <dependencies>
+                        <dependency>
+                            <groupId>org.junit.vintage</groupId>
+                            <artifactId>junit-vintage-engine</artifactId>
+                            <version>5.9.1</version>
+                        </dependency>
+                    </dependencies>
+            <configuration>
+            <argLine>@{argLine} --add-opens java.base/java.lang=ALL-UNNAMED</argLine>
+            </configuration>
+        </plugin>
+
+        <!-- JaCoCo Plugin -->
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-plugin.version}</version>
+            <configuration>
+            <excludes>
+                <exclude>org/opengroup/osdu/legal/azure/LegalApplication.class</exclude>
+                <exclude>**/**Config*</exclude>
+            </excludes>
+            </configuration>
+            <executions>
+            <execution>
+                <goals>
+                <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>report</id>
+                <phase>prepare-package</phase>
+                <goals>
+                <goal>report</goal>
+                </goals>
+            </execution>
+            </executions>
+        </plugin>
+        </plugins>
+    </build>
+    </project>
+
+</pattern>
+
+<examples>
+    <example>
+        - (severity: 5) [pom.xml] Outdated dependency 'core-lib-azure.version' [line 27] Updated from 1.0.0 to 2.0.2 for latest Azure core library features and security fixes
+        - (severity: 5) [pom.xml] Outdated dependency 'cucumber.version' [line 28] Updated from 5.7.0 to 7.20.1 for latest testing framework capabilities
+        - (severity: 4) [pom.xml] Redundant dependencies removed [multiple lines] Removed duplicate Spring Security dependencies and consolidated into spring-boot-starter-security
+        - (severity: 4) [pom.xml] Improved dependency management [lines 45-53] Added core Azure library as BOM for better version management
+        - (severity: 3) [pom.xml] Restructured properties section [lines 38-43] Organized properties into logical groups (core, test, plugin versions)
+        - (severity: 3) [pom.xml] Enhanced logging configuration [lines 89-103] Added proper log4j2 configuration with appropriate exclusions
+        - (severity: 3) [pom.xml] Updated JaCoCo plugin version [line 228] From 0.8.10 to 0.8.12 for improved code coverage reporting
+        - (severity: 2) [pom.xml] Improved project description [line 4] Changed from "Azure related implementation staff" to "Schema Service on Azure"
+        - (severity: 2) [pom.xml] Better dependency organization [lines 82-103] Grouped dependencies by purpose with clear comments
+        - (severity: 1) [pom.xml] Cleaned up XML formatting and comments throughout the file for better readability
+    </example>
+</examples>
+
+<pull_request>
+    ```markdown
+    # POM File Organization and Vulnerability Updates
+
+    ## Summary
+    [Brief description of the changes and their purpose]
+
+    ## Motivation
+    [Why these changes are necessary]
+
+    ## Changes Made
+    [List of significant changes, ordered by severity]
+
+    ### Added
+    - [List of new dependencies]
+
+    ### Updated
+    - [List of updated dependencies with version changes]
+
+    ### Removed
+    - [List of removed dependencies]
+    ```
+</pull_request>
+
+$pom
