@@ -1,10 +1,6 @@
-# Agents Creating Agents
+# Putting it together - Agents Creating Agents
 
-A comprehensive look at the creation of single-file agents using Azure OpenAI SDK with a focus on Agent patterns. 
-
-## Overview
-
-This repository contains examples demonstrating various features of the Azure OpenAI SDK, with a focus on building intelligent agents and assistants. Each example is implemented as a self-contained Python script with built-in tests.
+A comprehensive look at the creation of single-file agents using Azure OpenAI SDK with a focus on using the Director pattern. 
 
 ## The Director Pattern: LLM as a Judge
 
